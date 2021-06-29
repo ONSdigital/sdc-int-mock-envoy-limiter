@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mock-envoy
+  labels:
+    app: mock-envoy
+spec:
+  replicas: [REPLICAS]
+  selector:
+    matchLabels:
+      app: mock-envoy
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      name: mock-envoy
+      labels:
+        app: mock-envoy
+    spec:
+      containers:
+      - name: mock-envoy
+        image: eu.gcr.io/[GCR]/mock-envoy:[CONTAINER_VERSION]
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "[CPU_REQ]"
+            memory: "[MEM_REQ]"
+          limits:
+            cpu: "[CPU_MAX]"
+            memory: "[MEM_MAX]"
+        readinessProbe:
+          httpGet:
+            path: /info
+            port: 8181
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /info
+            port: 8181
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+        ports:
+        - name: http-server
+          containerPort: 8181
+        env:
+        - name: JAVA_TOOL_OPTIONS
+          value: "-Dlogging.useJson=true
+            -Dspring.profiles.active=[ENV]"
