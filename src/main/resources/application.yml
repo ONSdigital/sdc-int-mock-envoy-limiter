@@ -28,15 +28,6 @@ management:
       enabled: true 
     health:
       enabled: true
-  metrics:
-    tags:
-      application: MockEnvoy
-      pod: ${HOSTNAME}
-    export:
-      stackdriver:
-        project-id: ${GOOGLE_CLOUD_PROJECT}
-        enabled: false
-        step: PT2M
 
 server:
   port: 8181
