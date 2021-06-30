@@ -42,6 +42,7 @@ public final class MockEnvoyEndpoints implements CTPEndpoint {
 
   @RequestMapping(value = "/info", method = RequestMethod.GET)
   public ResponseEntity<String> info() {
+    log.info("PMB: In info endpoint");
     return ResponseEntity.ok("mock-envoy");
   }
 
