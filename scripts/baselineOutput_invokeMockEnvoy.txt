@@ -1,0 +1,351 @@
+1) Hit info endpoint:
+{
+  "name": "mock-envoy",
+  "version": "0.0.1-SNAPSHOT",
+  "origin": "${scm.url}",
+  "commit": "${buildNumber}",
+  "branch": "${scmBranch}",
+  "built": "${timestamp}"
+}
+
+
+2) Turn on limits. Expecting http 429 status now:
+Limit control called. Now responding with http 429 and code 'OVER_LIMIT'
+
+3) Send in a couple of requests:
+{
+  "overallCode": "429",
+  "statuses": [
+    {
+      "code": "OVER_LIMIT",
+      "currentLimit": {
+        "requestsPerUnit": 100,
+        "unit": "HOUR"
+      },
+      "limitRemaining": 999
+    },
+    {
+      "code": "OVER_LIMIT",
+      "currentLimit": {
+        "requestsPerUnit": 200,
+        "unit": "HOUR"
+      },
+      "limitRemaining": 999
+    },
+    {
+      "code": "OVER_LIMIT",
+      "currentLimit": {
+        "requestsPerUnit": 300,
+        "unit": "HOUR"
+      },
+      "limitRemaining": 999
+    }
+  ]
+}
+{
+  "overallCode": "429",
+  "statuses": [
+    {
+      "code": "OVER_LIMIT",
+      "currentLimit": {
+        "requestsPerUnit": 100,
+        "unit": "HOUR"
+      },
+      "limitRemaining": 999
+    },
+    {
+      "code": "OVER_LIMIT",
+      "currentLimit": {
+        "requestsPerUnit": 200,
+        "unit": "HOUR"
+      },
+      "limitRemaining": 999
+    },
+    {
+      "code": "OVER_LIMIT",
+      "currentLimit": {
+        "requestsPerUnit": 300,
+        "unit": "HOUR"
+      },
+      "limitRemaining": 999
+    }
+  ]
+}
+
+
+4) Get captured requests:
+[
+  {
+    "domain": "respondenthome",
+    "descriptors": [
+      {
+        "entries": [
+          {
+            "key": "productGroup",
+            "value": "UAC"
+          },
+          {
+            "key": "individual",
+            "value": "false"
+          },
+          {
+            "key": "deliveryChannel",
+            "value": "SMS"
+          },
+          {
+            "key": "caseType",
+            "value": "HH"
+          },
+          {
+            "key": "uprn",
+            "value": "987"
+          }
+        ]
+      },
+      {
+        "entries": [
+          {
+            "key": "productGroup",
+            "value": "UAC"
+          },
+          {
+            "key": "individual",
+            "value": "false"
+          },
+          {
+            "key": "deliveryChannel",
+            "value": "SMS"
+          },
+          {
+            "key": "caseType",
+            "value": "HH"
+          },
+          {
+            "key": "telNo",
+            "value": "07968583119"
+          }
+        ]
+      },
+      {
+        "entries": [
+          {
+            "key": "productGroup",
+            "value": "UAC"
+          },
+          {
+            "key": "individual",
+            "value": "false"
+          },
+          {
+            "key": "deliveryChannel",
+            "value": "SMS"
+          },
+          {
+            "key": "caseType",
+            "value": "HH"
+          },
+          {
+            "key": "ipAddress",
+            "value": "123.123.123.123"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "domain": "respondenthome",
+    "descriptors": [
+      {
+        "entries": [
+          {
+            "key": "productGroup",
+            "value": "UAC"
+          },
+          {
+            "key": "individual",
+            "value": "false"
+          },
+          {
+            "key": "deliveryChannel",
+            "value": "SMS"
+          },
+          {
+            "key": "caseType",
+            "value": "HH"
+          },
+          {
+            "key": "uprn",
+            "value": "987"
+          }
+        ]
+      },
+      {
+        "entries": [
+          {
+            "key": "productGroup",
+            "value": "UAC"
+          },
+          {
+            "key": "individual",
+            "value": "false"
+          },
+          {
+            "key": "deliveryChannel",
+            "value": "SMS"
+          },
+          {
+            "key": "caseType",
+            "value": "HH"
+          },
+          {
+            "key": "telNo",
+            "value": "07968583119"
+          }
+        ]
+      },
+      {
+        "entries": [
+          {
+            "key": "productGroup",
+            "value": "UAC"
+          },
+          {
+            "key": "individual",
+            "value": "false"
+          },
+          {
+            "key": "deliveryChannel",
+            "value": "SMS"
+          },
+          {
+            "key": "caseType",
+            "value": "HH"
+          },
+          {
+            "key": "ipAddress",
+            "value": "123.123.123.123"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+
+5) Switch limiter off. Back to http 200 status:
+Limit control called. Now responding with http 200 and code 'OK'
+
+6) Send in request:
+{
+  "overallCode": "200",
+  "statuses": [
+    {
+      "code": "OK",
+      "currentLimit": {
+        "requestsPerUnit": 100,
+        "unit": "HOUR"
+      },
+      "limitRemaining": 999
+    },
+    {
+      "code": "OK",
+      "currentLimit": {
+        "requestsPerUnit": 200,
+        "unit": "HOUR"
+      },
+      "limitRemaining": 999
+    },
+    {
+      "code": "OK",
+      "currentLimit": {
+        "requestsPerUnit": 300,
+        "unit": "HOUR"
+      },
+      "limitRemaining": 999
+    }
+  ]
+}
+
+
+7) Get captured requests:
+[
+  {
+    "domain": "respondenthome",
+    "descriptors": [
+      {
+        "entries": [
+          {
+            "key": "productGroup",
+            "value": "UAC"
+          },
+          {
+            "key": "individual",
+            "value": "false"
+          },
+          {
+            "key": "deliveryChannel",
+            "value": "SMS"
+          },
+          {
+            "key": "caseType",
+            "value": "HH"
+          },
+          {
+            "key": "uprn",
+            "value": "987"
+          }
+        ]
+      },
+      {
+        "entries": [
+          {
+            "key": "productGroup",
+            "value": "UAC"
+          },
+          {
+            "key": "individual",
+            "value": "false"
+          },
+          {
+            "key": "deliveryChannel",
+            "value": "SMS"
+          },
+          {
+            "key": "caseType",
+            "value": "HH"
+          },
+          {
+            "key": "telNo",
+            "value": "07968583119"
+          }
+        ]
+      },
+      {
+        "entries": [
+          {
+            "key": "productGroup",
+            "value": "UAC"
+          },
+          {
+            "key": "individual",
+            "value": "false"
+          },
+          {
+            "key": "deliveryChannel",
+            "value": "SMS"
+          },
+          {
+            "key": "caseType",
+            "value": "HH"
+          },
+          {
+            "key": "ipAddress",
+            "value": "123.123.123.123"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+

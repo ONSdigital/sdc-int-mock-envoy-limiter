@@ -1,0 +1,10 @@
+FROM openjdk:11-jre-slim
+
+RUN apt-get update
+RUN apt-get -yq clean
+RUN groupadd -g 989 mock-envoy && \
+    useradd -r -u 989 -g mock-envoy mock-envoy
+USER mock-envoy
+COPY target/mock-envoy*.jar /opt/mock-envoy.jar
+
+ENTRYPOINT [ "java", "-jar", "/opt/mock-envoy.jar" ]
