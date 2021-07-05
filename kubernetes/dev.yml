@@ -52,5 +52,4 @@ spec:
           containerPort: 8181
         env:
         - name: JAVA_TOOL_OPTIONS
-          value: "-Dlogging.useJson=true
-            -Dspring.profiles.active=dev"
+          value: "-Dspring.profiles.active=dev"
