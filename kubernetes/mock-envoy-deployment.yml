@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: mock-envoy
-        image: eu.gcr.io/[GCR]/mock-envoy:[CONTAINER_VERSION]
+        image: europe-west2-docker.pkg.dev/ons-ci-int/[GCR]/mock-envoy:[CONTAINER_VERSION]
         imagePullPolicy: Always
         resources:
           requests:
